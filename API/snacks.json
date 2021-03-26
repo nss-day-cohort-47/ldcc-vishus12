@@ -435,6 +435,12 @@
       "email": "ld@ldcc.com",
       "admin": true,
       "id": 1
+    },
+    {
+      "name": "Vishal",
+      "email": "vishy@fishy.com",
+      "admin": false,
+      "id": 1
     }
   ]
 }

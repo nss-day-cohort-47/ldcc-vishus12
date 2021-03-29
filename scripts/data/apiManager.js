@@ -44,21 +44,23 @@ export const registerUser = (userObj) => {
 			return getLoggedInUser();
 		})
 }
+
 export const getToppings = (snackId) => {
-	return fetch (`${apiURL}/snackToppings?snackId=${snackId}&_expand=topping&_expand=snack`)
-	.then(response => response.json())
+	return fetch(`${apiURL}/snackToppings?snackId=${snackId}&_expand=topping&_expand=snack`)
+		.then(response => response.json())
 }
+
 
 ///// snack functions
 
 let snackCollection = [];
 
 export const useSnackCollection = () => {
-  //Best practice: we don't want to alter the original state, so
-  //make a copy of it and then return it
-  //the spread operator makes quick work
-  const snackCollectionCopy = [...snackCollection]
-  return snackCollectionCopy;
+	//Best practice: we don't want to alter the original state, so
+	//make a copy of it and then return it
+	//the spread operator makes quick work
+	const snackCollectionCopy = [...snackCollection]
+	return snackCollectionCopy;
 }
 
 export const getSnacks = () => {
@@ -71,6 +73,23 @@ export const getSnacks = () => {
 }
 
 export const getSingleSnack = (snackId) => {
-	return fetch(`${apiURL}/snacks/${snackId}?_expand=type&_expand=season&_expand=inFlavor&_expand=shape`)
-	.then(response => response.json())
+	return fetch(`${apiURL}/snacks/${snackId}?_expand=type&_expand=shape&_expand=inFlavor&_expand=season`)
+		.then(response => response.json())
+}
+
+let toppingsCollection = [];
+
+export const useSnackToppingsCollection = () => {
+	const toppingsCollectionCopy = [...toppingsCollection]
+	return toppingsCollectionCopy;
+}
+
+
+export const getSnackToppings = () => {
+	return fetch(`${apiURL}/toppings`)
+		.then(response => response.json())
+		.then(parsedResponse => {
+			toppingsCollection = parsedResponse
+			return parsedResponse;
+		})
 }

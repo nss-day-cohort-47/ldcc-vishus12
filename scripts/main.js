@@ -1,14 +1,12 @@
-console.log('yum, yum, yum');
-
 import { LoginForm } from "./auth/LoginForm.js";
 import { RegisterForm } from "./auth/RegisterForm.js";
-import { NavBar } from "./nav/NavBar.js";
+import { NavBar, populateToppings, renderToppings } from "./nav/NavBar.js";
 import { SnackList } from "./snacks/SnackList.js";
 import { SnackDetails } from "./snacks/SnackDetails.js";
 import { Footer } from "./nav/Footer.js";
 import {
 	logoutUser, setLoggedInUser, loginUser, registerUser, getLoggedInUser,
-	getSnacks, getSingleSnack, getToppings
+	getSnacks, getSingleSnack, getToppings, getSnackToppings, useSnackToppingsCollection
 } from "./data/apiManager.js";
 
 
@@ -68,11 +66,10 @@ applicationElement.addEventListener("click", event => {
 		getSingleSnack(snackId)
 			.then(snackObj => {
 				getToppings(snackId)
-				.then(snackToppings => {
-					console.log(snackToppings);
-					snackToppings
-					showDetails(snackObj, snackToppings);
-				})
+					.then(snackToppings => {
+						console.log(snackToppings)
+						showDetails(snackObj, snackToppings);
+					})
 			})
 	}
 })
@@ -108,13 +105,24 @@ const showLoginRegister = () => {
 }
 
 const showNavBar = () => {
+	const toppingList = useSnackToppingsCollection();
+	console.log(toppingList)
+
 	applicationElement.innerHTML += NavBar();
+	renderToppings(toppingList);
 }
 
 const showSnackList = () => {
 	getSnacks().then(allSnacks => {
 		const listElement = document.querySelector("#mainContent")
 		listElement.innerHTML = SnackList(allSnacks);
+	})
+}
+
+const showToppingsList = () => {
+	getSnackToppings().then(allToppings =>{
+		const toppingElement = document.querySelector(".toppingDropdown")
+		toppingElement.innerHTML = useSnackToppingsCollection(allToppings);
 	})
 }
 
@@ -128,6 +136,7 @@ const startLDSnacks = () => {
 	applicationElement.innerHTML += `<div id="mainContent"></div>`;
 	showSnackList();
 	showFooter();
+	populateToppings();
 
 }
 

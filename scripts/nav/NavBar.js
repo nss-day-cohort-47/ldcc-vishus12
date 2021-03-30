@@ -2,18 +2,19 @@ import { getLoggedInUser } from "../data/apiManager.js"
 
 import { useSnackToppingsCollection, getSnackToppings } from "../data/apiManager.js"
 
-export const renderToppings = (allToppings) => {
-
+export const renderToppings = () => {
+	const toppingList = useSnackToppingsCollection();
 	const toppingTarget = document.querySelector(".toppingDropdown")
 
-	let toppingOptions = allToppings.map(singleTopping => {
+	let toppingOptions = toppingList.map(singleTopping => {
 		return `<option value="${singleTopping.id}">${singleTopping.name}</option>`
 	})
-
-	toppingTarget.innerHTML = `
-	<select class = "toppingDropdown">${toppingOptions}</select>
-	`
+return toppingOptions 
+	
+	
+	
 }
+
 
 export const populateToppings = () => {
 	getSnackToppings()
@@ -25,7 +26,7 @@ export const populateToppings = () => {
 
 export const NavBar = () => {
 	//only show navItems and addTypeButton if user is logged in
-	
+
 	const navItems = getLoggedInUser().id ? `
 	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
@@ -37,7 +38,7 @@ export const NavBar = () => {
 		</li>
 		<li class="nav-item ms-1">
 		<div class ="toppingDropdown"  aria-label="Select A Topping">
-				
+		<select class = "btn-info toppingDropdown"><option value=0>Select A Topping</option>${renderToppings()}</select>		
 		</div>
 		</li>
 		<li class="nav-item ms-1">

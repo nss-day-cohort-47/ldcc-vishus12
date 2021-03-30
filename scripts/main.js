@@ -105,11 +105,9 @@ const showLoginRegister = () => {
 }
 
 const showNavBar = () => {
-	const toppingList = useSnackToppingsCollection();
-	console.log(toppingList)
 
 	applicationElement.innerHTML += NavBar();
-	renderToppings(toppingList);
+
 }
 
 const showSnackList = () => {
@@ -119,24 +117,27 @@ const showSnackList = () => {
 	})
 }
 
-const showToppingsList = () => {
-	getSnackToppings().then(allToppings =>{
-		const toppingElement = document.querySelector(".toppingDropdown")
-		toppingElement.innerHTML = useSnackToppingsCollection(allToppings);
-	})
-}
+// const showToppingsList = () => {
+// 	getSnackToppings().then(allToppings => {
+// 		const toppingElement = document.querySelector(".toppingDropdown")
+// 		toppingElement.innerHTML = useSnackToppingsCollection(allToppings);
+// 	})
+// }
 
 const showFooter = () => {
 	applicationElement.innerHTML += Footer();
 }
 
 const startLDSnacks = () => {
-	applicationElement.innerHTML = "";
-	showNavBar();
-	applicationElement.innerHTML += `<div id="mainContent"></div>`;
-	showSnackList();
-	showFooter();
-	populateToppings();
+	getSnackToppings()
+		.then(() => {
+			applicationElement.innerHTML = "";
+			showNavBar();
+			applicationElement.innerHTML += `<div id="mainContent"></div>`;
+			showSnackList();
+			showFooter();
+			populateToppings();
+		})
 
 }
 

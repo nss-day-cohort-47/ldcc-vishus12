@@ -38,7 +38,7 @@ export const NavBar = () => {
 		</li>
 		<li class="nav-item ms-1">
 		<div class ="toppingDropdown"  aria-label="Select A Topping">
-		<select class = "btn-info toppingDropdown"><option value=0>Select A Topping</option>${renderToppings()}</select>		
+		<select id="toppingDropdown" class = "btn-info toppingDropdown"><option value=0>Select A Topping</option>${renderToppings()}</select>			
 		</div>
 		</li>
 		<li class="nav-item ms-1">
